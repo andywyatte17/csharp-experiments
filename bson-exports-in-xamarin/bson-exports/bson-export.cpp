@@ -26,7 +26,10 @@ extern "C" BsonResult BsonExport(char *ptr, uint32_t len)
 {
   (void)ptr;
   (void)len;
-
+#if 1
+  char abcd[] = "abc\0";
+  return Store(abcd, 4);
+#else
   bson_t parent;
   bson_t child;
 
@@ -43,6 +46,7 @@ extern "C" BsonResult BsonExport(char *ptr, uint32_t len)
   const char *data = reinterpret_cast<const char *>(bson_get_data(&parent));
   auto size = static_cast<uint32_t>(parent.len);
   return Store(data, size);
+#endif
 }
 
 extern "C" void BsonResultFree(char* ptr)

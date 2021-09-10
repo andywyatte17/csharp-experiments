@@ -9,4 +9,7 @@ set(SOURCES
   "bson-export-c-check.c"
 )
 
+add_compile_options("-pthread")
+add_link_options("-static-libstdc++")
+
 add_library (bson_exports SHARED ${SOURCES} ${HEADERS})
