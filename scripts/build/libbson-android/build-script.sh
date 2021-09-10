@@ -15,6 +15,8 @@ git clone https://github.com/mongodb/libbson.git
 cd libbson
 mkdir bin || true
 cd bin
-cmake -G"Unix Makefiles" .. # -DCMAKE_TOOLCHAIN_FILE:STRING=/opt/android-ndk-r13b/build/cmake/android.toolchain.cmake
+cmake -G"Unix Makefiles" .. \
+  -DCMAKE_BUILD_TYPE=Release
+  #-DCMAKE_TOOLCHAIN_FILE:STRING=/opt/android-ndk-r13b/build/cmake/android.toolchain.cmake
 make
-cp *.so /host/
+cp *.so /result/
