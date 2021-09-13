@@ -1,27 +1,21 @@
 #!/bin/sh
 
-#mkdir /build
-#cd /build
-#tar -xzf /host/libbson-1.9.5.tar.gz
-#cd libbson-1.9.5
-#./configure --host=arm-linux-gnueabi \
-#     CC=/android-ndk-r19c/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi16-clang \
-#     --prefix=/usr --libdir=/usr/lib64
-#make
-#sudo make install
-#cp /usr/lib64/cmake/libbson-1.0/* /host/
-
-# git clone https://github.com/mongodb/mongo-c-driver/tree/master/src/libbson
+export MONGO_V=mongo-c-driver-1.19.0
+mongo
 cd ~
-git clone https://github.com/mongodb/mongo-c-driver
-cd ~/mongo-c-driver/
+# git clone https://github.com/mongodb/mongo-c-driver
+wget https://github.com/mongodb/mongo-c-driver/releases/download/1.19.0/mongo-c-driver-1.19.0.tar.gz
+
+tar -xzf mongo-c-driver-1.19.0.tar.gz
+
+cd ~/${MONGO_V}/ || exit 1
 mkdir bin
 cd bin
 
 sed -i -e "s/libbson-1.0.so.0/libbson-1.0.so/g" ../bin/src/libbson/bson/bson-targets.cmake
 
 rm CMakeCache.txt || true
-cmake -G"Unix Makefiles" ~/mongo-c-driver -DCMAKE_BUILD_TYPE=Release
+cmake -G"Unix Makefiles" ~/${MONGO_V} -DCMAKE_BUILD_TYPE=Release
 cmake --build . --target bson_shared
 
 cp src/libbson/libbson-1.0.so.0 /result/
