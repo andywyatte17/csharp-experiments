@@ -11,5 +11,6 @@ set(SOURCES
 
 add_compile_options("-pthread")
 add_link_options("-static-libstdc++")
+add_link_options("/libs/libbson-1.0.so.0")
 
 add_library (bson_exports SHARED ${SOURCES} ${HEADERS})

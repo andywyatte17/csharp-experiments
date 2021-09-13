@@ -30,6 +30,7 @@ def Build(so_result_location, log_file_name, conan_docker_name):
             "-v", bson_exports + slash + ":/bson-exports/",
             "-v", os.getcwd() + slash + ":/host/",
             "-v", so_result_location + ":/result/",
+            "-v", so_result_location + ":/libs/",
             "--rm", conan_docker_name,
             "/bin/sh", "-c", "sh /host/build-script.sh"
         ]

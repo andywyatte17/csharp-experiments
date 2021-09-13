@@ -1,0 +1,1 @@
+docker run -v C:\Projects\csharp-experiments\bson-exports-in-xamarin\bson-c-xamarin\bson-c-xamarin.Android\libs\x86_64:/libs/ --rm -it conanio/android-clang8-x86 /bin/bash
