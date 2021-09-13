@@ -15,8 +15,10 @@ namespace bson_c_xamarin
 // #if Android
 #if ! IOS
     const string DllName = "libbson_exports.so";
+    const string BsonDllName = "libbson-1.0.so";
 #else
     const string DllName = "__Internal";
+    const string BsonDllName = "__Internal";
 #endif
 
     public struct BsonResult
@@ -30,5 +32,8 @@ namespace bson_c_xamarin
 
     [DllImport(DllName, EntryPoint = "BsonResultFree")]
     internal static extern void BsonResultFree(IntPtr ptr);
+
+    [DllImport(BsonDllName, EntryPoint = "bson_new")]
+    internal static extern IntPtr bson_new();    
   }
 }

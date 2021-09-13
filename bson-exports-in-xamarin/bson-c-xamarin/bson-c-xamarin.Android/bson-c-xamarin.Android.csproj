@@ -66,6 +66,9 @@
     <AndroidNativeLibrary Include="libs\x86_64\libbson_exports.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="libs\x86_64\libbson-1.0.so.0">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidNativeLibrary>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
@@ -87,12 +90,10 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\drawable\" />
-    <Folder Include="libs\" />
     <Folder Include="libs\arm64-v8a\" />
     <Folder Include="libs\armeabi-v7a\" />
     <Folder Include="libs\x86\" />
-    <Folder Include="libs\x86_64\" />
+    <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bson-c-xamarin\bson-c-xamarin.csproj">
