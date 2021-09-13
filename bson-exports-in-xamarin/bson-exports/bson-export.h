@@ -8,18 +8,18 @@
 
 struct BsonResult
 {
-  char* ptr;
+  const char* ptr;
   uint32_t size;
 };
 
 #ifdef __cplusplus
 
-extern "C" BsonResult BsonExport(char* ptr, uint32_t size);
-extern "C" void BsonResultFree(char* ptr);
+extern "C" BsonResult BsonExport(const char* ptr, uint32_t size);
+extern "C" void BsonResultFree(const char* ptr);
 
 #else
 
-struct BsonResult BsonExport(char* ptr, uint32_t size);
-void BsonResultFree(char* ptr);
+struct BsonResult BsonExport(const char* ptr, uint32_t size);
+void BsonResultFree(const char* ptr);
 
 #endif
