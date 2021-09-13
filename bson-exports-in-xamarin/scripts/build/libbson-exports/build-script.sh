@@ -11,13 +11,17 @@ ln -s ~/bson/libbson-1.9.5 libbson-1.9.5
 
 mkdir -p bin
 cd bin
-rm libbson_exports.so || true
-cmake -G"Unix Makefiles" .. -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_ANDROID_STL_TYPE=c++_static \
-  -DCMAKE_TOOLCHAIN_FILE=/android-ndk-r19c/build/cmake/android.toolchain.cmake
-cmake --build . --
 
-ls -l libbson_exports.so
+rm libbson_exports.so || true
+rm /result/libbson_exports.so || true
+
+rm CMakeCache.txt || true
+cmake -G"Unix Makefiles" .. -DCMAKE_BUILD_TYPE=Debug \
+  -DCMAKE_ANDROID_STL_TYPE=c++_static
+cmake --build .
+
 cp libbson_exports.so /result/
-nm -g /result/libbson_exports.so
+nm -g /result/libbson_exports.so | grep " U "
+nm -g /result/libbson_exports.so | grep " T "
+readelf -h /result/libbson_exports.so | grep 'Class\|File\|Machine'
 readelf --dynamic /result/libbson_exports.so

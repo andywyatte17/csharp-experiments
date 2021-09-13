@@ -6,6 +6,7 @@ import subprocess
 from datetime import datetime
 import glob
 from pprint import pprint
+import shutil
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 
