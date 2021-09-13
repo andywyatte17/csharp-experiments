@@ -12,8 +12,6 @@ cd ~/${MONGO_V}/ || exit 1
 mkdir bin
 cd bin
 
-sed -i -e "s/libbson-1.0.so.0/libbson-1.0.so/g" ../bin/src/libbson/bson/bson-targets.cmake
-
 rm CMakeCache.txt || true
 cmake -G"Unix Makefiles" ~/${MONGO_V} -DCMAKE_BUILD_TYPE=Release
 cmake --build . --target bson_shared

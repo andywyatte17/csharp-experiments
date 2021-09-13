@@ -9,8 +9,6 @@ os.chdir(HERE)
 
 slash = join(".", ".").replace('.', '')
 
-GetLibBson()
-
 SO_DIR = join("..", "..", "..", "bson-c-xamarin", "bson-c-xamarin.Android", "libs", "x86")
 SO_DIR = os.path.realpath(SO_DIR)
 if not os.path.exists(SO_DIR):

@@ -10,13 +10,6 @@ import shutil
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 
-def GetLibBson():
-  if not os.path.exists("libbson-1.9.5.tar.gz"):
-    import wget
-    wget.download(url = \
-      "https://github.com/mongodb/libbson/releases/download/1.9.5/libbson-1.9.5.tar.gz"
-    )
-
 def Build(so_result_location, log_file_name, conan_docker_name):
   os.chdir(HERE)
   slash = join(".", ".").replace('.', '')
@@ -28,7 +21,7 @@ def Build(so_result_location, log_file_name, conan_docker_name):
     docker_script = \
         ["docker", "run",
             "-v", bson_exports + slash + ":/bson-exports/",
-            "-v", os.getcwd() + slash + ":/host/",
+            "-v", join(os.getcwd(), "build-script.sh") + ":/host/build-script.sh",
             "-v", so_result_location + ":/result/",
             "-v", so_result_location + ":/libs/",
             "--rm", conan_docker_name,
