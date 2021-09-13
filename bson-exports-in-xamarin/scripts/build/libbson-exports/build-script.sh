@@ -1,13 +1,14 @@
 #!/bin/sh
 
 mkdir -p ~/bson
-cd ~/bson
-tar -xzf /host/libbson-1.9.5.tar.gz
-cd ~/bson/libbson-1.9.5
+cd ~
+wget https://github.com/mongodb/mongo-c-driver/releases/download/1.19.0/mongo-c-driver-1.19.0.tar.gz
+tar -xzf mongo-c-driver-1.19.0.tar.gz
+cd ~/mongo-c-driver-1.19.0
 cmake -G"Unix Makefiles" .
 
 cd /bson-exports
-ln -s ~/bson/libbson-1.9.5 libbson-1.9.5
+ln -s ~/mongo-c-driver-1.19.0 mongo-c-driver
 
 mkdir -p bin
 cd bin
