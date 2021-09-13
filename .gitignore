@@ -353,3 +353,4 @@ build*.txt
 *.tar.gz
 !**/libs/x86
 android-ndk
+mongo-c-driver

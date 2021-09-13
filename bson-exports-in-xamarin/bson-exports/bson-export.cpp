@@ -33,9 +33,17 @@ extern "C" BsonResult BsonExport(char *ptr, uint32_t len)
   bson_t parent;
   bson_t child;
 
+  std::vector<uint8_t> mega;
+  mega.resize(1024 * 1024);
+
   bson_init(&parent);
   bson_append_document_begin(&parent, "foo", 3, &child);
   bson_append_int32(&child, "baz", 3, 1);
+  bson_append_binary(&child, // ...
+    "loads-a-bytes", 13, // ...
+    BSON_SUBTYPE_BINARY,
+    mega.data(),
+    static_cast<unsigned>(mega.size()));
   bson_append_document_end(&parent, &child);
 
   struct AtExit {
