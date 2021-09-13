@@ -26,7 +26,7 @@ extern "C" BsonResult BsonExport(char *ptr, uint32_t len)
 {
   (void)ptr;
   (void)len;
-#if 1
+#if 0
   char abcd[] = "abc\0";
   return Store(abcd, 4);
 #else
