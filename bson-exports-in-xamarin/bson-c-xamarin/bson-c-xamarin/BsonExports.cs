@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -12,8 +16,8 @@ namespace bson_c_xamarin
   */
   internal static class BsonExports
   {
-// #if Android
-#if ! IOS
+    // #if Android
+#if !IOS
     const string DllName = "libbson_exports.so";
     const string BsonDllName = "libbson-1.0.so";
 #else
@@ -28,12 +32,56 @@ namespace bson_c_xamarin
     }
 
     [DllImport(DllName, EntryPoint = "BsonExport")]
-    internal static extern BsonResult BsonExport(IntPtr ptr, UInt32 size);
+    private static extern BsonResult BsonExportF(IntPtr ptr, UInt32 size);
+
+    /// <summary>
+    /// Call the BsonExport method with parameters specified in 'obj'.
+    /// </summary>
+    internal static JObject BsonExport(object obj)
+    {
+      // Write 'obj' to bson data
+
+      MemoryStream mso = new MemoryStream();
+      using (BsonWriter writer = new BsonWriter(mso))
+      {
+        JsonSerializer serializer = new JsonSerializer();
+        serializer.Serialize(writer, obj);
+      }
+
+      // Call BsonExportF 'C' export
+
+      IntPtr bsonBuf = IntPtr.Zero;
+      BsonResult bsonRes;
+      try
+      {
+        byte[] bson = mso.ToArray();
+        bsonBuf = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(bson.Length);
+        System.Runtime.InteropServices.Marshal.Copy(bson, 0, bsonBuf, bson.Length);
+        bsonRes = BsonExportF(bsonBuf, (uint)bson.Length);
+      }
+      finally
+      {
+        System.Runtime.InteropServices.Marshal.FreeCoTaskMem(bsonBuf);
+      }
+
+      // Extract result as bytes
+
+      var data = new byte[bsonRes.len];
+      System.Runtime.InteropServices.Marshal.Copy(bsonRes.ptr, data, 0, (int)bsonRes.len);
+      BsonResultFree(bsonRes.ptr);
+
+      // Read result to JObject
+
+      using (var ms = new MemoryStream(data))
+      {
+        using (BsonReader reader = new BsonReader(ms))
+        {
+          return (JObject)JToken.ReadFrom(reader);
+        }
+      }
+    }
 
     [DllImport(DllName, EntryPoint = "BsonResultFree")]
-    internal static extern void BsonResultFree(IntPtr ptr);
-
-    [DllImport(BsonDllName, EntryPoint = "bson_new")]
-    internal static extern IntPtr bson_new();    
+    private static extern void BsonResultFree(IntPtr ptr);
   }
 }

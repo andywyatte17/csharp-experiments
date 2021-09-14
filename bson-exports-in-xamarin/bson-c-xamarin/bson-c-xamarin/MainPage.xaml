@@ -19,7 +19,15 @@
                 </FormattedString>
             </Label.FormattedText>
         </Label>
-        <Button Text="ClickMe" Clicked="Button_Clicked"/>
+        <Button Text="Test BsonExport" Clicked="Button_Clicked" FontSize="{OnPlatform iOS=20, Android=Medium, UWP=24}">
+            <Button.FontFamily>
+                <OnPlatform x:TypeArguments="x:String">
+                    <On Platform="iOS" Value="MarkerFelt-Thin" />
+                    <On Platform="Android" Value="Lobster-Regular" />
+                    <On Platform="UWP" Value="ArimaMadurai-Black" />
+                </OnPlatform>
+            </Button.FontFamily>
+        </Button>
     </StackLayout>
 
 </ContentPage>
