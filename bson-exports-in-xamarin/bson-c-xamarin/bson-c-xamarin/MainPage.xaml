@@ -28,6 +28,7 @@
                 </OnPlatform>
             </Button.FontFamily>
         </Button>
+        <Label x:Name="editor" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="8,8,8,8"/>
     </StackLayout>
 
 </ContentPage>

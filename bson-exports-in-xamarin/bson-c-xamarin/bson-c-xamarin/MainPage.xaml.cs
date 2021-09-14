@@ -17,17 +17,19 @@ namespace bson_c_xamarin
     }
     private void Button_Clicked(object sender, EventArgs e)
     {
+      string text = "";
+
       foreach (var loop in new[] { 1, 2, 3 })
       {
         var watch = System.Diagnostics.Stopwatch.StartNew();
 
-        Debug.WriteLine("\n" + $"--- {loop} ---" + "\n");
+        text += "\n" + $"--- {loop} ---" + "\n";
 
         JObject bsonRes;
         if (loop == 1 || loop == 2)
         {
           var v = new { data = new { size = 1024 * 512 * loop } };
-          Debug.WriteLine($"Input to BsonExport is {v}");
+          text += $"Input to BsonExport is {v}\n";
           bsonRes = BsonExports.BsonExport(v);
         }
         else
@@ -37,11 +39,11 @@ namespace bson_c_xamarin
         }
 
         watch.Stop();
-        Debug.WriteLine($"watch-1 = {watch.ElapsedMilliseconds}ms");
+        text += $"watch-1 = {watch.ElapsedMilliseconds}ms\n";
 
         try
         {
-          var j1 = (JObject)bsonRes["foo"];
+          var j1 = (JObject)bsonRes["result"];
           var s = j1["loads-a-bytes"].ToObject<string>();
           j1["loads-a-bytes"] = $"string of length {s.Length}";
         }
@@ -49,10 +51,12 @@ namespace bson_c_xamarin
         {
         }
 
-        Debug.WriteLine($"bsonRes = {bsonRes}");
-
-        // ...
+        text += $"bsonRes = {bsonRes}\n";
       }
+
+      // ...
+
+      editor.Text = text;
     }
   }
 }
